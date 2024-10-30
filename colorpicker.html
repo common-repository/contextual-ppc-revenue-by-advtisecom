@@ -1,0 +1,258 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Color Picker</title>
+</head>
+
+<body onload="palletechanger('Default Advtise pallete');g('ad_type1').click();g('public').click(); codechanger();" onfocus="h(); codechanger()">
+
+<style type="text/css">
+body {font-family: arial
+}
+}
+td{vertial-align:top}
+a:link,a:visited,a:active{
+text-decoration:none;
+color:#000000;
+font-weight:normal;}
+a:hover{
+text-decoration:underline;
+color:#FF0000;
+}
+h1{font-size:16px}
+h3{font-size:14px}
+label{font-size:12px}
+tr.paddings {
+padding-bottom: 3px;}
+.colors {
+position:absolute;
+display:none;
+left: 150px;
+top: 150px;
+width: 290px;
+height: 137px;
+background:#666666;}
+.colorhover1 {
+width: 20px;
+border: 1px solid blue;
+cursor: pointer;
+height: 20px;}
+
+td.hw{
+height:25px;
+width:20px;
+margin: 0;
+cursor:pointer;
+border:1px solid blue;
+}
+td.bolder1{font-size:58px; font-weight:bold}
+</style>
+
+<script type="text/javascript">
+var main_id;
+var obj,hiddenobj;
+var pal_name = new Array('Default Advtise pallete','Open Air','Seaside','Shadow','Blue Mix','Ink','Graphite');
+var border = new Array('FFFFFF','FFFFFF','336699','000000','6699CC','000000','CCCCCC','FFFFFF','FFFFFF','FFFFFF','999999','FFFFFF');
+var bgcolor = new Array('FFFFFF','FFFFFF','FFFFFF','F0F0F0','003366','000000','CCCCCC','FFFFFF','FFFFFF','FFFFFF','FFFFFF','FFFFFF');
+var linkcol = new Array('0000FF','0000FF','0000FF','0000FF','FFFFFF','FFFFFF','000000','341473','990000','0066CC','7F7F7F','CC6600');
+var urlcolor= new Array('008000','008000','008000','008000','AECCEB','999999','666666','008000','CC0033','063E3F','063E3F','008000');
+var textcol = new Array('000000','000000','000000','000000','AECCEB','CCCCCC','333333','000000','000000','000000','000000','000000');
+function backtosingle(){g('multiple').style.visibility = 'hidden';
+g('single').style.visibility = 'visible';}
+function palletechanger(name){
+var index;
+if(name != 'multi'){
+for(i=0;i<12;i++) if(pal_name[i] == name){index = i;break;}
+document.form.codec0.value = border[i];document.form.hidden0.value = border[i]; g('color0').style.backgroundColor='#'+border[i];
+document.form.codec2.value = bgcolor[i]; document.form.hidden1.value = border[i]; g('color2').style.backgroundColor='#'+bgcolor[i];
+document.form.codec1.value = linkcol[i]; document.form.hidden2.value = border[i]; g('color1').style.backgroundColor='#'+linkcol[i];
+document.form.codec4.value = urlcolor[i]; document.form.hidden3.value = border[i];g('color4').style.backgroundColor='#'+urlcolor[i];
+document.form.codec3.value = textcol[i]; document.form.hidden4.value = border[i]; g('color3').style.backgroundColor='#'+textcol[i];}
+else{g('multiple').style.visibility = 'visible';
+g('single').style.visibility = 'hidden';}
+}
+function getvalue(a){if(a==undefined){return null}if(a.value){return a.value}else if(a.length){if(a.options){return a.options[a.selectedIndex].value}else{for(var b=0;b<a.length;b++){if(a[b].checked){return a[b].value}}}}return null}
+function g(id){return document.getElementById(id)}
+function s(){g('colordiv').style.display = 'block';}
+function h(){g('colordiv').style.display = 'none';}
+function changepos(left,top){
+g('colordiv').style.top=top+"px";
+g('colordiv').style.left=left+"px";
+}
+function idchanger(id){mainid = id;
+if(mainid=='color0'){ obj = document.form.codec0; hiddenobj = document.form.hidden0;}
+else if(mainid=='color1'){ obj = document.form.codec1; hiddenobj = document.form.hidden1;}
+else if(mainid=='color2'){ obj = document.form.codec2; hiddenobj = document.form.hidden2;}
+else if(mainid=='color3'){ obj = document.form.codec3; hiddenobj = document.form.hidden3;}
+else if(mainid=='color4'){ obj = document.form.codec4; hiddenobj = document.form.hidden4;}
+else if(mainid=='color5'){ obj = document.form.codec5; hiddenobj = document.form.hidden5;}
+}
+function get_id(){return mainid;}
+function valuechanger(color){
+obj.value=color;
+hiddenobj.value=color;}
+
+function truecolorkeyup(code){
+if(code.length < 6) return;
+else{var l=0;
+for(i=0;i<6;i++){
+index = parseInt('0x'+code.charAt(i));
+if(index!=0) if(!index){l = 1; break;}}
+if(l){alert('Invalid color (e.g. "#FFCC99")');obj.value = hiddenobj.value;}
+else{g(mainid).style.backgroundColor='#'+code;
+codechanger();}}
+}
+function truecoloronchange(code){
+if(code.length < 6){alert('Invalid color (e.g. "#FFCC99")');obj.value = hiddenobj.value;}
+else truecolorkeyup(code);
+}
+function whichvisible(){
+if(getvalue(document.form.adtype) == 'adunit'){
+if(getvalue(document.form.adtypeselect) == 'text' || getvalue(document.form.adtypeselect) == 'text_image'){
+g('format0').style.visibility = 'visible';
+g('format1').style.visibility = 'hidden';
+g('format2').style.visibility = 'hidden';}
+else{
+g('format0').style.visibility = 'hidden';
+g('format1').style.visibility = 'visible';
+g('format2').style.visibility = 'hidden';}}
+else{
+g('format0').style.visibility = 'hidden';
+g('format1').style.visibility = 'hidden';
+g('format2').style.visibility = 'visible';}
+}
+function clickedadd(index){tf[index] = 1;}
+function clickedremove(index){tf[index] = 0;}
+
+function check(){
+if(document.form._client_.value.length<16){alert('Please enter the 16 digit number');
+document.form._client_.value = document.form.hidden6.value;}
+else{document.form.hidden6.value = document.form._client_.value; codechanger();}
+}
+function getwidth(haritsaa){
+var ret = '';
+for(i=0;i<haritsaa.length;i++)
+if(haritsaa.substr(i,1)!='x') ret = ret+haritsaa.substr(i,1);
+else break;
+return ret;
+}
+function getheight(haritsaa){
+var ret = '';
+var lock = 0;
+for(i=0;i<haritsaa.length;i++){
+if(lock==1) ret = ret+haritsaa.substr(i,1);
+if(haritsaa.substr(i,1)=='x') lock = 1;}
+return ret;
+}
+function codechanger(){
+var code = '&lt;script type="text/javascript"&gt;\n';
+code = code+'Advtise_ad_client = "pub-'+g('client').value+'";\n';
+if(getvalue(document.form.more)!=''){
+if(getvalue(document.form.more)=='urladdress'){
+code = code+'Advtise_alternate_ad_url = "'+g('geturl').value+'";\n';
+}
+else if(getvalue(document.form.more)=='colors'){
+code = code+'Advtise_alternate_color = "'+g('codec5').value+'";\n';
+}
+}
+if(getvalue(document.form.adtype)=='adunit'){
+if(getvalue(document.form.adtypeselect)=='text' || getvalue(document.form.adtypeselect)=='text_image'){
+code=code+'Advtise_ad_width = '+getwidth(getvalue(document.form.size_0))+';\n';
+code=code+'Advtise_ad_height = '+getheight(getvalue(document.form.size_0))+';\n';
+code=code+'Advtise_ad_format = "'+getvalue(document.form.size_0)+'_as";\n';
+}
+else if(getvalue(document.form.adtypeselect)=='image'){
+code=code+'Advtise_ad_width = '+getwidth(getvalue(document.form.size_1))+';\n';
+code=code+'Advtise_ad_height = '+getheight(getvalue(document.form.size_1))+';\n';
+code=code+'Advtise_ad_format = "'+getvalue(document.form.size_1)+'_as";\n';
+}
+code=code+'Advtise_ad_type = "'+getvalue(document.form.adtypeselect)+'";\n';
+}
+else if(getvalue(document.form.adtype)=='linkunit'){
+code=code+'Advtise_ad_width = '+getwidth(getvalue(document.form.size_2))+';\n';
+code=code+'Advtise_ad_height = '+getheight(getvalue(document.form.size_2))+';\n';
+code=code+'Advtise_ad_format = "'+getvalue(document.form.size_2)+'_0ads_al";\n';
+}
+code = code+'Advtise_color_border = "'+getvalue(document.form.codec0)+'";\n';
+code = code+'Advtise_color_bg = "'+getvalue(document.form.codec1)+'";\n';
+code = code+'Advtise_color_link = "'+getvalue(document.form.codec2)+'";\n';
+code = code+'Advtise_color_text = "'+getvalue(document.form.codec3)+'";\n';
+code = code+'Advtise_color_url = "'+getvalue(document.form.codec4)+'";\n';
+if(getvalue(document.form.cornerStyle)!='') code = code+'Advtise_ui_features = "rc:'+getvalue(document.form.cornerStyle)+'";\n';
+code = code + '&lt;/script&gt;&lt;script type="text/javascript" src="http://pagead2.Advtisesyndication.com/pagead/show_ads.js"&gt;&lt;/script&gt;';
+g('mycode').innerHTML = code;
+}
+function linkcaller(){
+var code = '<script type="text/javascript"><br>';
+code = code+'Advtise_ad_client = "pub-'+g('client').value+'";<br>';
+if(getvalue(document.form.more)!=''){
+if(getvalue(document.form.more)=='urladdress'){
+code = code+'Advtise_alternate_ad_url = "'+g('geturl').value+'";<br>';
+}
+else if(getvalue(document.form.more)=='colors'){
+code = code+'Advtise_alternate_color = "'+g('codec5').value+'";<br>';
+}
+}
+if(getvalue(document.form.adtype)=='adunit'){
+if(getvalue(document.form.adtypeselect)=='text' || getvalue(document.form.adtypeselect)=='text_image'){
+code=code+'Advtise_ad_width = '+getwidth(getvalue(document.form.size_0))+';<br>';
+code=code+'Advtise_ad_height = '+getheight(getvalue(document.form.size_0))+';<br>';
+code=code+'Advtise_ad_format = "'+getvalue(document.form.size_0)+'_as";<br>';
+}
+else if(getvalue(document.form.adtypeselect)=='image'){
+code=code+'Advtise_ad_width = '+getwidth(getvalue(document.form.size_1))+';<br>';
+code=code+'Advtise_ad_height = '+getheight(getvalue(document.form.size_1))+';<br>';
+code=code+'Advtise_ad_format = "'+getvalue(document.form.size_1)+'_as";<br>';
+}
+code=code+'Advtise_ad_type = "'+getvalue(document.form.adtypeselect)+'";<br>';
+}
+else if(getvalue(document.fstyorm.adtype)=='linkunit'){
+code=code+'Advtise_ad_width = '+getwidth(getvalue(document.form.size_2))+';<br>';
+code=code+'Advtise_ad_height = '+getheight(getvalue(document.form.size_2))+';<br>';
+code=code+'Advtise_ad_format = "'+getvalue(document.form.size_2)+'_0ads_al";<br>';
+}
+code = code+'Advtise_color_border = "'+getvalue(document.form.codec0)+'";<br>';
+code = code+'Advtise_color_bg = "'+getvalue(document.form.codec1)+'";<br>';
+code = code+'Advtise_color_link = "'+getvalue(document.form.codec2)+'";<br>';
+code = code+'Advtise_color_text = "'+getvalue(document.form.codec3)+'";<br>';
+code = code+'Advtise_color_url = "'+getvalue(document.form.codec4)+'";<br>';
+if(getvalue(document.form.cornerStyle)!='') code = code+'Advtise_ui_features = "rc:'+getvalue(document.form.cornerStyle)+'";<br>';
+code = code + '</';
+code = code + 'script><script type="text/javascript" src="http://pagead2.Advtisesyndication.com/pagead/show_ads.js"></';
+code = code + 'script>';
+g('Advtiseadsense').innerHTML = code;
+}
+</script>
+<form name="form" action="#" method="post">
+<tr><td><br/><br/>
+<h3>Color Picker</h3>
+<table cellspacing="0" cellpadding="0" border="0">
+<tbody>
+  <tr class="paddings">
+    <td align="right">
+      <label for="Border">Ad Border   #</label>
+    </td>
+    
+    <td><input type="text" onchange="truecoloronchange(this.value);" onfocus="h();idchanger('color0')" onkeyup="truecolorkeyup(this.value);" value="" name="codec0" maxlength="6" size="6" id="Border"/><input type="hidden" id="hidden0" value="FFFFFF"/> </td>
+    
+    <td><div onmouseout="this.style.borderColor='blue'" onmouseover="this.style.borderColor='red'" onclick="changepos(170,90);s();idchanger('color0')" class="colorhover1" id="color0" style="background-color: rgb(255, 255, 255);"/></td></tr>
+    
+  <tr class="paddings">
+    <td align="right"><label for="Title">Title Link #</label></td><td><input type="text" onchange="truecoloronchange(this.value);" onfocus="h();idchanger('color1')" onkeyup="truecolorkeyup(this.value);" value="" name="codec1" maxlength="6" size="6" id="Title"/><input type="hidden" id="hidden1" value="FFFFFF"/> </td><td><div onmouseout="this.style.borderColor='blue'" onmouseover="this.style.borderColor='red'" onclick="changepos(170,110);s();idchanger('color1')" class="colorhover1" id="color1" style="background-color: rgb(0, 0, 255);"/></td></tr>
+    
+    <tr class="paddings">
+      <td align="right"><label for="Background">Background   #</label></td><td><input type="text" onchange="truecoloronchange(this.value);" onfocus="h();idchanger('color2')" onkeyup="truecolorkeyup(this.value);" value="" name="codec2" maxlength="6" size="6" id="Background"/><input type="hidden" id="hidden2" value="FFFFFF"/> </td><td><div onmouseout="this.style.borderColor='blue'" onmouseover="this.style.borderColor='red'" onclick="changepos(170,135);s();idchanger('color2')" class="colorhover1" id="color2" style="background-color: rgb(255, 255, 255);"/></td></tr>
+      
+    <tr class="paddings"><td align="right"><label for="Text">Text   #</label></td><td><input type="text" onchange="truecoloronchange(this.value);" onfocus="h();idchanger('color3')" onkeyup="truecolorkeyup(this.value);" value="" name="codec3" maxlength="6" size="6" id="Text"/><input type="hidden" id="hidden3" value="FFFFFF"/> </td><td><div onmouseout="this.style.borderColor='blue'" onmouseover="this.style.borderColor='red'" onclick="changepos(170,155);s();idchanger('color3')" class="colorhover1" id="color3" style="background-color: rgb(0, 0, 0);"/></td></tr>
+    
+    <tr class="paddings"><td align="right"><label for="URL">URL   #</label></td><td><input type="text" onchange="truecoloronchange(this.value);" onfocus="h();idchanger('color4')" onkeyup="truecolorkeyup(this.value);" value="" name="codec4" maxlength="6" size="6" id="URL"/><input type="hidden" id="hidden4" value="FFFFFF"/> </td><td><div onmouseout="this.style.borderColor='blue'" onmouseover="this.style.borderColor='red'" onclick="changepos(170,180);s();idchanger('color4')" class="colorhover1" id="color4" style="background-color: rgb(0, 128, 0);"/></td></tr></tbody></table>
+</td></tr>
+<tr><td><br /><br />Copy and Paste the above color codes into the plugin's color options</td></tr>
+</form>
+
+<span class="colors" id="colordiv"><table cellpadding="0" cellspacing="2" border="0">
+<tr><td class="hw" style="background-color: #FFFFCC" onmouseover="document.getElementById(get_id()).style.backgroundColor='#FFFFCC'; valuechanger('FFFFCC'); this.style.borderColor='red'" onmouseout="this.style.borderColor='blue'" onmousedown="h();codechanger()"></td><td class="hw" style="background-color: #FFFF66" onmouseover="document.getElementById(get_id()).style.backgroundColor='#FFFF66'; valuechanger('FFFF66'); this.style.borderColor='red'" onmouseout="this.style.borderColor='blue'" onmousedown="h();codechanger()"></td><td class="hw" style="background-color: #FFCC66" onmouseover="document.getElementById(get_id()).style.backgroundColor='#FFCC66'; valuechanger('FFCC66'); this.style.borderColor='red'" onmouseout="this.style.borderColor='blue'" onmousedown="h();codechanger()"></td><td class="hw" style="background-color: #F2984C" onmouseover="document.getElementById(get_id()).style.backgroundColor='#F2984C'; valuechanger('F2984C'); this.style.borderColor='red'" onmouseout="this.style.borderColor='blue'" onmousedown="h();codechanger()"></td><td class="hw" style="background-color: #E1771E" onmouseover="document.getElementById(get_id()).style.backgroundColor='#E1771E'; valuechanger('E1771E'); this.style.borderColor='red'" onmouseout="this.style.borderColor='blue'" onmousedown="h();codechanger()"></td><td class="hw" style="background-color: #B47B10" onmouseover="document.getElementById(get_id()).style.backgroundColor='#B47B10'; valuechanger('B47B10'); this.style.borderColor='red'" onmouseout="this.style.borderColor='blue'" onmousedown="h();codechanger()"></td><td class="hw" style="background-color: #A9501B" onmouseover="document.getElementById(get_id()).style.backgroundColor='#A9501B'; valuechanger('A9501B'); this.style.borderColor='red'" onmouseout="this.style.borderColor='blue'" onmousedown="h();codechanger()"></td><td class="hw" style="background-color: #6F3C1B" onmouseover="document.getElementById(get_id()).style.backgroundColor='#6F3C1B'; valuechanger('6F3C1B'); this.style.borderColor='red'" onmouseout="this.style.borderColor='blue'" onmousedown="h();codechanger()"></td><td class="hw" style="background-color: #804000" onmouseover="document.getElementById(get_id()).style.backgroundColor='#804000'; valuechanger('804000'); this.style.borderColor='red'" onmouseout="this.style.borderColor='blue'" onmousedown="h();codechanger()"></td><td class="hw" style="background-color: #CC0000" onmouseover="document.getElementById(get_id()).style.backgroundColor='#CC0000'; valuechanger('CC0000'); this.style.borderColor='red'" onmouseout="this.style.borderColor='blue'" onmousedown="h();codechanger()"></td><td class="hw" style="background-color: #940F04" onmouseover="document.getElementById(get_id()).style.backgroundColor='#940F04'; valuechanger('940F04'); this.style.borderColor='red'" onmouseout="this.style.borderColor='blue'" onmousedown="h();codechanger()"></td><td class="hw" style="background-color: #660000" onmouseover="document.getElementById(get_id()).style.backgroundColor='#660000'; valuechanger('660000'); this.style.borderColor='red'" onmouseout="this.style.borderColor='blue'" onmousedown="h();codechanger()"></td></tr><tr><td class="hw" style="background-color: #C3D9FF" onmouseover="document.getElementById(get_id()).style.backgroundColor='#C3D9FF'; valuechanger('C3D9FF'); this.style.borderColor='red'" onmouseout="this.style.borderColor='blue'" onmousedown="h();codechanger()"></td><td class="hw" style="background-color: #99C9FF" onmouseover="document.getElementById(get_id()).style.backgroundColor='#99C9FF'; valuechanger('99C9FF'); this.style.borderColor='red'" onmouseout="this.style.borderColor='blue'" onmousedown="h();codechanger()"></td><td class="hw" style="background-color: #66B5FF" onmouseover="document.getElementById(get_id()).style.backgroundColor='#66B5FF'; valuechanger('66B5FF'); this.style.borderColor='red'" onmouseout="this.style.borderColor='blue'" onmousedown="h();codechanger()"></td><td class="hw" style="background-color: #3D81EE" onmouseover="document.getElementById(get_id()).style.backgroundColor='#3D81EE'; valuechanger('3D81EE'); this.style.borderColor='red'" onmouseout="this.style.borderColor='blue'" onmousedown="h();codechanger()"></td><td class="hw" style="background-color: #0066CC" onmouseover="document.getElementById(get_id()).style.backgroundColor='#0066CC'; valuechanger('0066CC'); this.style.borderColor='red'" onmouseout="this.style.borderColor='blue'" onmousedown="h();codechanger()"></td><td class="hw" style="background-color: #6C82B5" onmouseover="document.getElementById(get_id()).style.backgroundColor='#6C82B5'; valuechanger('6C82B5'); this.style.borderColor='red'" onmouseout="this.style.borderColor='blue'" onmousedown="h();codechanger()"></td><td class="hw" style="background-color: #32527A" onmouseover="document.getElementById(get_id()).style.backgroundColor='#32527A'; valuechanger('32527A'); this.style.borderColor='red'" onmouseout="this.style.borderColor='blue'" onmousedown="h();codechanger()"></td><td class="hw" style="background-color: #2D6E89" onmouseover="document.getElementById(get_id()).style.backgroundColor='#2D6E89'; valuechanger('2D6E89'); this.style.borderColor='red'" onmouseout="this.style.borderColor='blue'" onmousedown="h();codechanger()"></td><td class="hw" style="background-color: #006699" onmouseover="document.getElementById(get_id()).style.backgroundColor='#006699'; valuechanger('006699'); this.style.borderColor='red'" onmouseout="this.style.borderColor='blue'" onmousedown="h();codechanger()"></td><td class="hw" style="background-color: #215670" onmouseover="document.getElementById(get_id()).style.backgroundColor='#215670'; valuechanger('215670'); this.style.borderColor='red'" onmouseout="this.style.borderColor='blue'" onmousedown="h();codechanger()"></td><td class="hw" style="background-color: #003366" onmouseover="document.getElementById(get_id()).style.backgroundColor='#003366'; valuechanger('003366'); this.style.borderColor='red'" onmouseout="this.style.borderColor='blue'" onmousedown="h();codechanger()"></td><td class="hw" style="background-color: #000033" onmouseover="document.getElementById(get_id()).style.backgroundColor='#000033'; valuechanger('000033'); this.style.borderColor='red'" onmouseout="this.style.borderColor='blue'" onmousedown="h();codechanger()"></td></tr><tr><td class="hw" style="background-color: #CAF99B" onmouseover="document.getElementById(get_id()).style.backgroundColor='#CAF99B'; valuechanger('CAF99B'); this.style.borderColor='red'" onmouseout="this.style.borderColor='blue'" onmousedown="h();codechanger()"></td><td class="hw" style="background-color: #80FF00" onmouseover="document.getElementById(get_id()).style.backgroundColor='#80FF00'; valuechanger('80FF00'); this.style.borderColor='red'" onmouseout="this.style.borderColor='blue'" onmousedown="h();codechanger()"></td><td class="hw" style="background-color: #00FF80" onmouseover="document.getElementById(get_id()).style.backgroundColor='#00FF80'; valuechanger('00FF80'); this.style.borderColor='red'" onmouseout="this.style.borderColor='blue'" onmousedown="h();codechanger()"></td><td class="hw" style="background-color: #78B749" onmouseover="document.getElementById(get_id()).style.backgroundColor='#78B749'; valuechanger('78B749'); this.style.borderColor='red'" onmouseout="this.style.borderColor='blue'" onmousedown="h();codechanger()"></td><td class="hw" style="background-color: #2BA94F" onmouseover="document.getElementById(get_id()).style.backgroundColor='#2BA94F'; valuechanger('2BA94F'); this.style.borderColor='red'" onmouseout="this.style.borderColor='blue'" onmousedown="h();codechanger()"></td><td class="hw" style="background-color: #38B63C" onmouseover="document.getElementById(get_id()).style.backgroundColor='#38B63C'; valuechanger('38B63C'); this.style.borderColor='red'" onmouseout="this.style.borderColor='blue'" onmousedown="h();codechanger()"></td><td class="hw" style="background-color: #0D8F63" onmouseover="document.getElementById(get_id()).style.backgroundColor='#0D8F63'; valuechanger('0D8F63'); this.style.borderColor='red'" onmouseout="this.style.borderColor='blue'" onmousedown="h();codechanger()"></td><td class="hw" style="background-color: #2D8930" onmouseover="document.getElementById(get_id()).style.backgroundColor='#2D8930'; valuechanger('2D8930'); this.style.borderColor='red'" onmouseout="this.style.borderColor='blue'" onmousedown="h();codechanger()"></td><td class="hw" style="background-color: #1B703A" onmouseover="document.getElementById(get_id()).style.backgroundColor='#1B703A'; valuechanger('1B703A'); this.style.borderColor='red'" onmouseout="this.style.borderColor='blue'" onmousedown="h();codechanger()"></td><td class="hw" style="background-color: #11593C" onmouseover="document.getElementById(get_id()).style.backgroundColor='#11593C'; valuechanger('11593C'); this.style.borderColor='red'" onmouseout="this.style.borderColor='blue'" onmousedown="h();codechanger()"></td><td class="hw" style="background-color: #063E3F" onmouseover="document.getElementById(get_id()).style.backgroundColor='#063E3F'; valuechanger('063E3F'); this.style.borderColor='red'" onmouseout="this.style.borderColor='blue'" onmousedown="h();codechanger()"></td><td class="hw" style="background-color: #002E3F" onmouseover="document.getElementById(get_id()).style.backgroundColor='#002E3F'; valuechanger('002E3F'); this.style.borderColor='red'" onmouseout="this.style.borderColor='blue'" onmousedown="h();codechanger()"></td></tr><tr><td class="hw" style="background-color: #FFBBE8" onmouseover="document.getElementById(get_id()).style.backgroundColor='#FFBBE8'; valuechanger('FFBBE8'); this.style.borderColor='red'" onmouseout="this.style.borderColor='blue'" onmousedown="h();codechanger()"></td><td class="hw" style="background-color: #E895CC" onmouseover="document.getElementById(get_id()).style.backgroundColor='#E895CC'; valuechanger('E895CC'); this.style.borderColor='red'" onmouseout="this.style.borderColor='blue'" onmousedown="h();codechanger()"></td><td class="hw" style="background-color: #FF6FCF" onmouseover="document.getElementById(get_id()).style.backgroundColor='#FF6FCF'; valuechanger('FF6FCF'); this.style.borderColor='red'" onmouseout="this.style.borderColor='blue'" onmousedown="h();codechanger()"></td><td class="hw" style="background-color: #C94093" onmouseover="document.getElementById(get_id()).style.backgroundColor='#C94093'; valuechanger('C94093'); this.style.borderColor='red'" onmouseout="this.style.borderColor='blue'" onmousedown="h();codechanger()"></td><td class="hw" style="background-color: #9D1961" onmouseover="document.getElementById(get_id()).style.backgroundColor='#9D1961'; valuechanger('9D1961'); this.style.borderColor='red'" onmouseout="this.style.borderColor='blue'" onmousedown="h();codechanger()"></td><td class="hw" style="background-color: #800040" onmouseover="document.getElementById(get_id()).style.backgroundColor='#800040'; valuechanger('800040'); this.style.borderColor='red'" onmouseout="this.style.borderColor='blue'" onmousedown="h();codechanger()"></td><td class="hw" style="background-color: #800080" onmouseover="document.getElementById(get_id()).style.backgroundColor='#800080'; valuechanger('800080'); this.style.borderColor='red'" onmouseout="this.style.borderColor='blue'" onmousedown="h();codechanger()"></td><td class="hw" style="background-color: #72179D" onmouseover="document.getElementById(get_id()).style.backgroundColor='#72179D'; valuechanger('72179D'); this.style.borderColor='red'" onmouseout="this.style.borderColor='blue'" onmousedown="h();codechanger()"></td><td class="hw" style="background-color: #6728B2" onmouseover="document.getElementById(get_id()).style.backgroundColor='#6728B2'; valuechanger('6728B2'); this.style.borderColor='red'" onmouseout="this.style.borderColor='blue'" onmousedown="h();codechanger()"></td><td class="hw" style="background-color: #6131BD" onmouseover="document.getElementById(get_id()).style.backgroundColor='#6131BD'; valuechanger('6131BD'); this.style.borderColor='red'" onmouseout="this.style.borderColor='blue'" onmousedown="h();codechanger()"></td><td class="hw" style="background-color: #341473" onmouseover="document.getElementById(get_id()).style.backgroundColor='#341473'; valuechanger('341473'); this.style.borderColor='red'" onmouseout="this.style.borderColor='blue'" onmousedown="h();codechanger()"></td><td class="hw" style="background-color: #400058" onmouseover="document.getElementById(get_id()).style.backgroundColor='#400058'; valuechanger('400058'); this.style.borderColor='red'" onmouseout="this.style.borderColor='blue'" onmousedown="h();codechanger()"></td></tr><tr><td class="hw" style="background-color: #FFFFFF" onmouseover="document.getElementById(get_id()).style.backgroundColor='#FFFFFF'; valuechanger('FFFFFF'); this.style.borderColor='red'" onmouseout="this.style.borderColor='blue'" onmousedown="h();codechanger()"></td><td class="hw" style="background-color: #E6E6E6" onmouseover="document.getElementById(get_id()).style.backgroundColor='#E6E6E6'; valuechanger('E6E6E6'); this.style.borderColor='red'" onmouseout="this.style.borderColor='blue'" onmousedown="h();codechanger()"></td><td class="hw" style="background-color: #CCCCCC" onmouseover="document.getElementById(get_id()).style.backgroundColor='#CCCCCC'; valuechanger('CCCCCC'); this.style.borderColor='red'" onmouseout="this.style.borderColor='blue'" onmousedown="h();codechanger()"></td><td class="hw" style="background-color: #B3B3B3" onmouseover="document.getElementById(get_id()).style.backgroundColor='#B3B3B3'; valuechanger('B3B3B3'); this.style.borderColor='red'" onmouseout="this.style.borderColor='blue'" onmousedown="h();codechanger()"></td><td class="hw" style="background-color: #999999" onmouseover="document.getElementById(get_id()).style.backgroundColor='#999999'; valuechanger('999999'); this.style.borderColor='red'" onmouseout="this.style.borderColor='blue'" onmousedown="h();codechanger()"></td><td class="hw" style="background-color: #808080" onmouseover="document.getElementById(get_id()).style.backgroundColor='#808080'; valuechanger('808080'); this.style.borderColor='red'" onmouseout="this.style.borderColor='blue'" onmousedown="h();codechanger()"></td><td class="hw" style="background-color: #7F7F7F" onmouseover="document.getElementById(get_id()).style.backgroundColor='#7F7F7F'; valuechanger('7F7F7F'); this.style.borderColor='red'" onmouseout="this.style.borderColor='blue'" onmousedown="h();codechanger()"></td><td class="hw" style="background-color: #666666" onmouseover="document.getElementById(get_id()).style.backgroundColor='#666666'; valuechanger('666666'); this.style.borderColor='red'" onmouseout="this.style.borderColor='blue'" onmousedown="h();codechanger()"></td><td class="hw" style="background-color: #4C4C4C" onmouseover="document.getElementById(get_id()).style.backgroundColor='#4C4C4C'; valuechanger('4C4C4C'); this.style.borderColor='red'" onmouseout="this.style.borderColor='blue'" onmousedown="h();codechanger()"></td><td class="hw" style="background-color: #333333" onmouseover="document.getElementById(get_id()).style.backgroundColor='#333333'; valuechanger('333333'); this.style.borderColor='red'" onmouseout="this.style.borderColor='blue'" onmousedown="h();codechanger()"></td><td class="hw" style="background-color: #191919" onmouseover="document.getElementById(get_id()).style.backgroundColor='#191919'; valuechanger('191919'); this.style.borderColor='red'" onmouseout="this.style.borderColor='blue'" onmousedown="h();codechanger()"></td><td class="hw" style="background-color: #000000" onmouseover="document.getElementById(get_id()).style.backgroundColor='#000000'; valuechanger('000000'); this.style.borderColor='red'" onmouseout="this.style.borderColor='blue'" onmousedown="h();codechanger()"></td></tr></table></span>
+
+</body>
+</html>
